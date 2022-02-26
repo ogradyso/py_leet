@@ -35,6 +35,8 @@ All the values in score are unique.
 
 import unittest
 
+
+from typing import List
 from heapq import heapify, heappush, heappop
 
 class Solution:
