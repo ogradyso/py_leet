@@ -34,57 +34,112 @@ All the values in score are unique.
 """
 
 import unittest
-
-
 from typing import List
-from heapq import heapify, heappush, heappop
+
+
+# from heapq import heapify, heappush, heappop
+
+# class Solution:
+#     def findRelativeRanks(self, score: List[int]) -> List[str]:
+#         place_names = ['Bronze Medal', 'Silver Medal','Gold Medal']
+#         place_val = 4
+#         heap = []
+#         index_dict = {}
+#         heapify(heap)
+#         # O(n)
+#         for score_i,score_val in enumerate(score):
+#             heappush(heap, -1 * score_val)
+#             index_dict[score_val] = score_i
+
+#         # O(n)
+#         while heap:
+#             max_val = -1 * heappop(heap)
+#             if not place_names:
+#                 score[index_dict[max_val]] = str(place_val)
+#                 place_val += 1
+#             else:
+#                 score[index_dict[max_val]] = place_names.pop()
+
+#         return score
+
+
+class MaxHeap:
+    def __init__(self):
+        self.heap = []
+        self.size = 0
+        
+    def heappush(self, value):
+        self.heap.append(value)
+        self.size += 1
+        self.heapify((self.size-1)//2,True)
+        
+    def swap(self, parent_i, child_i):
+        self.heap[parent_i], self.heap[child_i] = (self.heap[child_i], self.heap[parent_i])
+        
+    def heapify(self, index, direction):
+        if self.size > (2* index)+1:
+            if self.heap[index] < self.heap[(2* index)+1]:
+                self.swap(index,(2*index)+1)
+                if not direction: 
+                    self.heapify((2*index)+1,False)
+        if self.size > (2* index)+2:
+            if self.heap[index] < self.heap[(2* index)+2]:
+                self.swap(index,(2*index)+2)
+                if not direction: 
+                    self.heapify((2*index)+2,False)
+        if direction:
+            if index == 0:
+                return
+            self.heapify(index//2,True)
+        else:
+            return
+        
+        
+    def heappop(self):
+        popped = self.heap[0]
+        self.heap[0] = self.heap[self.size - 1]
+        self.size -= 1
+        self.heapify(0,False)
+        return popped
+
 
 class Solution:
     def findRelativeRanks(self, score: List[int]) -> List[str]:
-        place_names = ['Bronze Medal', 'Silver Medal','Gold Medal']
+        place_names = ["Bronze Medal", "Silver Medal", "Gold Medal"]
         place_val = 4
-        heap = []
-        index_dict = {}
-        heapify(heap)
-        # O(n)
+        heap_scores = MaxHeap()
+        score_i_dict = {}
         for score_i,score_val in enumerate(score):
-            heappush(heap, -1 * score_val)
-            index_dict[score_val] = score_i
-
-        # O(n)
-        while heap:
-            max_val = -1 * heappop(heap)
-            if not place_names:
-                score[index_dict[max_val]] = str(place_val)
-                place_val += 1
+            heap_scores.heappush(score_val)
+            score_i_dict[score_val] = score_i
+        for i in range(len(score)):
+            next_max = heap_scores.heappop()
+            max_i = score_i_dict[next_max]
+            if place_names:
+                score[max_i] = place_names.pop()
             else:
-                score[index_dict[max_val]] = place_names.pop()
-
+                score[max_i] = str(place_val)
+                place_val += 1
         return score
 
         
-        
 
         
-class TestStringMethods(unittest.TestCase):
+class TestMethods(unittest.TestCase):
 
-    def test_isMatch_ex1(self):
-        inputs = 3
-        output = "III"
+    def test_findRelativeRanks_ex1(self):
+        inputs = [5,4,3,2,1]
+        output = ["Gold Medal","Silver Medal","Bronze Medal","4","5"]
         mySolution = Solution()
-        self.assertEqual(mySolution.intToRoman(inputs), output)
+        self.assertEqual(mySolution.findRelativeRanks(inputs), output)
         
-    def test_isMatch_ex2(self):
-        inputs = 58
-        output = "LVIII"
+    def test_findRelativeRanks_ex2(self):
+        inputs = [10,3,8,9,4]
+        output = ["Gold Medal","5","Bronze Medal","Silver Medal","4"]
         mySolution = Solution()
-        self.assertEqual(mySolution.intToRoman(inputs), output)
+        self.assertEqual(mySolution.findRelativeRanks(inputs), output)
+
         
-    def test_isMatch_ex3(self):
-        inputs = 1994
-        output = "MCMXCIV"
-        mySolution = Solution()
-        self.assertEqual(mySolution.intToRoman(inputs), output)
 
 if __name__ == '__main__':
     unittest.main()
