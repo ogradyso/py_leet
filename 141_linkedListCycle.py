@@ -49,16 +49,16 @@ import unittest
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        visited = []
         if not head:
             return False
         if not head.next:
             return False
-        while head not in visited and head:
-            visited.append(head)
+        while head.next:
+            if head.val == "checked":
+                return True
+            head.val = "checked"
             head = head.next
-        return head in visited
-
+        return False
 
 class TestMethods(unittest.TestCase):
 
