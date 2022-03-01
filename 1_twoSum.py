@@ -33,27 +33,37 @@ Follow-up: Can you come up with an algorithm that is less than O(n2) time comple
 """
 
 import unittest
-
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        unique_val_dict = {}
-        for num_iterator in range(len(nums)):
-            difference = target - nums[num_iterator]
-            if nums[num_iterator] in unique_val_dict:
-                return [unique_val_dict[nums[num_iterator]], num_iterator]
-            else:
-                unique_val_dict[difference] = num_iterator
+from typing import List
+# class Solution(object):
+#     def twoSum(self, nums, target):
+#         """
+#         :type nums: List[int]
+#         :type target: int
+#         :rtype: List[int]
+#         """
+#         unique_val_dict = {}
+#         for num_iterator in range(len(nums)):
+#             difference = target - nums[num_iterator]
+#             if nums[num_iterator] in unique_val_dict:
+#                 return [unique_val_dict[nums[num_iterator]], num_iterator]
+#             else:
+#                 unique_val_dict[difference] = num_iterator
             
-        return []
+#         return []
         
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        diff_dict = {}
+        for index,num in enumerate(nums):
+            difference = target-num
+            if difference in diff_dict:
+                return [diff_dict[difference],index]
+            else:
+                diff_dict[difference] = index
+        return []
+            
 
-
-class TestStringMethods(unittest.TestCase):
+class TestMethods(unittest.TestCase):
 
     def test_twoSum_ex1(self):
         nums = [2,7,11,15]
