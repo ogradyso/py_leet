@@ -1,54 +1,48 @@
 # -*- coding: utf-8 -*-
 """
-Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
 
  
 
 Example 1:
 
-Input: nums = [3,0,1]
-Output: 2
-Explanation: n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
 Example 2:
 
-Input: nums = [0,1]
-Output: 2
-Explanation: n = 2 since there are 2 numbers, so all numbers are in the range [0,2]. 2 is the missing number in the range since it does not appear in nums.
-Example 3:
-
-Input: nums = [9,6,4,2,3,5,7,0,1]
-Output: 8
-Explanation: n = 9 since there are 9 numbers, so all numbers are in the range [0,9]. 8 is the missing number in the range since it does not appear in nums.
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transactions are done and the max profit = 0.
  
 
 Constraints:
 
-n == nums.length
-1 <= n <= 104
-0 <= nums[i] <= n
-All the numbers of nums are unique.
- 
-
-Follow up: Could you implement a solution using only O(1) extra space complexity and O(n) runtime complexity?
+1 <= prices.length <= 105
+0 <= prices[i] <= 104
 """
 
 import unittest
 from typing import List
 
 
-# class Solution:
-#     def missingNumber(self, nums: List[int]) -> int:
-#         return sum(range(len(nums)+1)) - sum(nums) 
-
-            
 class Solution:
-    def missingNumber(self, nums: List[int]) -> int:
-        result = len(nums)
-        for i in range(len(nums)):
-            result += (i - nums[i])
-            
-        return result
+    def maxProfit(self, prices: List[int]) -> int:
+        min_day = (10**4)+ 1
+        max_profit = -1
+        for day in prices:
+            if day < min_day:
+                min_day = day
+            if day - min_day > max_profit:
+                max_profit = day - min_day
+        return max_profit
 
+            
 
 class TestMethods(unittest.TestCase):
 
