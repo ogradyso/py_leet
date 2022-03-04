@@ -32,39 +32,27 @@ from typing import List
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        def kSum(nums: List[int], target: int, k: int) -> List[List[int]]:
-            result = []
-            # base case:
-            if not nums:
-                return result
-            #return current results if min and max of list
-            # are greater/less than avg_val:
-            avg_val = target // k
-            if avg_val < nums[0] or nums[-1] < avg_val:
-                return result
-            if k == 2:
-                return twoSum(nums, target)
-            
-            for num_iterator in range(len(nums)):
-                if num_iterator == 0 or nums[num_iterator-1] != nums[num_iterator]:
-                    for subset in kSum(nums[num_iterator+1:], target - nums[num_iterator], k-1):
-                        result.append([nums[num_iterator]]+subset)
-                        
-            return result
-        
-        def twoSum(nums: List[int], target: int) -> List[List[int]]:
-            result = []
-            s = set()
-            for num_iterator in range(len(nums)):
-                if len(result) == 0 or result[-1][1] != nums[num_iterator]:
-                    if target - nums[num_iterator] in s:
-                        result.append([target - nums[num_iterator], nums[num_iterator]])
-                s.add(nums[num_iterator])
-                
-            return result
-        
         nums.sort()
-        return kSum(nums, 0, 3)
+        results = []
+        for i,a in enumerate(nums):
+            if i > 0 and a == nums[i-1]:
+                continue
+            left = i + 1
+            right  = len(nums) -1
+            while left < right:
+                threeSum = a + nums[left] + nums[right]
+                if threeSum > 0:
+                    right -= 1
+                elif threeSum < 0:
+                    left +=1	
+                else:
+                    results.append([a,nums[left],nums[right]])
+                    left += 1
+                    while nums[left] == nums[left -1] and left < right:
+                        left += 1
+
+        return results
+
         
 class TestMethods(unittest.TestCase):
 
