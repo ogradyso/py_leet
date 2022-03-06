@@ -17,7 +17,6 @@ class Solution:
     def graphValidTree(self, n: int, edges: List[List[int]]) -> bool:
     	if not n:
     		return True
-    
     	adj = {i:[] for i in range(n)}
     	for (parent, child) in edges:
     		adj[parent].append(child)
