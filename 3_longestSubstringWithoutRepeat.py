@@ -31,31 +31,48 @@ s consists of English letters, digits, symbols and spaces.
 import unittest
 
 
-class Solution(object):
-    def lengthOfLongestSubstring(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        max_len = 0
-        current_len = 0
-        sequence_list = ''
-        for current_char in s:
-            if current_char in sequence_list:
-                char_index = sequence_list.index(current_char) + 1
-                sequence_list = sequence_list[char_index:]
-                sequence_list += current_char
-                if current_len > max_len:
-                    max_len = current_len
-                current_len = len(sequence_list)
-            else:
-                sequence_list += current_char
-                current_len += 1
+# class Solution(object):
+#     def lengthOfLongestSubstring(self, s):
+#         """
+#         :type s: str
+#         :rtype: int
+#         """
+#         max_len = 0
+#         current_len = 0
+#         sequence_list = ''
+#         for current_char in s:
+#             if current_char in sequence_list:
+#                 char_index = sequence_list.index(current_char) + 1
+#                 sequence_list = sequence_list[char_index:]
+#                 sequence_list += current_char
+#                 if current_len > max_len:
+#                     max_len = current_len
+#                 current_len = len(sequence_list)
+#             else:
+#                 sequence_list += current_char
+#                 current_len += 1
         
-        if current_len > max_len:
-            max_len = current_len
+#         if current_len > max_len:
+#             max_len = current_len
             
-        return max_len
+#         return max_len
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        charSet = set()
+        left = 0
+        res = 0
+        for right in range(len(s)):
+            while s[right] in charSet:
+                charSet.remove(s[left])
+                left += 1
+            charSet.add(s[right])
+            res = max(res, right -left + 1)
+        return res
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        
 
 
 class TestStringMethods(unittest.TestCase):
