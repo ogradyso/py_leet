@@ -49,5 +49,12 @@ class TestMethods(unittest.TestCase):
         mySolution = Solution()
         self.assertEqual(mySolution.decode(mySolution.encode(inputs)), output)
     
+    def test_encode_ex2(self):
+        inputs = ["we", "say", ":", "yes"]
+        output = ["we", "say", ":", "yes"]
+        mySolution = Solution()
+        self.assertEqual(mySolution.decode(mySolution.encode(inputs)), output)
+    
+    
 if __name__ == '__main__':
     unittest.main()

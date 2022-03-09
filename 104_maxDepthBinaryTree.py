@@ -33,33 +33,52 @@ class TreeNode:
         self.left = left
         self.right = right
         
+# recusive depth first search:
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         if not root:
             return 0
         return max(self.maxDepth(root.left) + 1,self.maxDepth(root.right)+1)
 
+#iterative BFS:
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        
+        queue = deque([root])
+        level_count = 0
+        while queue:
+            for i in range(len(queue)):
+                node = queue.popleft()
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+            level_count += 1
+        return level_count
+
+#iterative DFS (preorder traversal):
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        max_depth = 0
+        stack = [[root,1]]
+        while stack:
+            node, depth = stack.pop()
+            if node:
+                max_depth = max(max_depth, depth)
+                stack.append([node.left,depth+1])
+                stack.append([node.right, depth+1])
+        return max_depth
 
 class TestMethods(unittest.TestCase):
 
-    def test_isMatch_ex1(self):
+    def test_maxDepth_ex1(self):
         inputs = 3
         output = "III"
         mySolution = Solution()
         self.assertEqual(mySolution.intToRoman(inputs), output)
         
-    def test_isMatch_ex2(self):
-        inputs = 58
-        output = "LVIII"
-        mySolution = Solution()
-        self.assertEqual(mySolution.intToRoman(inputs), output)
-        
-    def test_isMatch_ex3(self):
-        inputs = 1994
-        output = "MCMXCIV"
-        mySolution = Solution()
-        self.assertEqual(mySolution.intToRoman(inputs), output)
-
 if __name__ == '__main__':
     unittest.main()
     
