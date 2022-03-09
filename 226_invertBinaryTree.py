@@ -1,32 +1,30 @@
 # -*- coding: utf-8 -*-
 """
-Given the roots of two binary trees p and q, write a function to check if they are the same or not.
-
-Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.
+Given the root of a binary tree, invert the tree, and return its root.
 
  
 
 Example 1:
 
 
-Input: p = [1,2,3], q = [1,2,3]
-Output: true
+Input: root = [4,2,7,1,3,6,9]
+Output: [4,7,2,9,6,3,1]
 Example 2:
 
 
-Input: p = [1,2], q = [1,null,2]
-Output: false
+Input: root = [2,1,3]
+Output: [2,3,1]
 Example 3:
 
-
-Input: p = [1,2,1], q = [1,1,2]
-Output: false
+Input: root = []
+Output: []
  
 
 Constraints:
 
-The number of nodes in both trees is in the range [0, 100].
--104 <= Node.val <= 104
+The number of nodes in the tree is in the range [0, 100].
+-100 <= Node.val <= 100
+ 
 """
 
 import unittest
@@ -38,14 +36,18 @@ import unittest
 #         self.left = left
 #         self.right = right
 class Solution:
-    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        if not p and not q:
-            return True
-        elif not p or not q or p.val != q.val:
-            return False
-        else:
-            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
-
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:
+            return None
+        
+        #swap the children
+        tmp = root.left
+        root.left = root.right
+        root.right = tmp
+        
+        self.invertTree(root.left)
+        self.invertTree(root.right)
+        return root
 
 class TestMethods(unittest.TestCase):
 
