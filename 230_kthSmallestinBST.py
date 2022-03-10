@@ -1,47 +1,61 @@
 # -*- coding: utf-8 -*-
 """
-Given the root of a binary tree, check whether it is a 
-mirror of itself (i.e., symmetric around its center).
+Given a binary search tree (BST), find the lowest common 
+ancestor (LCA) of two given nodes in the BST.
+
+According to the definition of LCA on Wikipedia: “The 
+lowest common ancestor is defined between two nodes p 
+and q as the lowest node in T that has both p and q as 
+descendants (where we allow a node to be a descendant 
+             of itself).”
 
 Example 1:
 
-Input: root = [1,2,2,3,4,4,3]
-Output: true
+Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8
+Output: 6
+Explanation: The LCA of nodes 2 and 8 is 6.
 Example 2:
 
-Input: root = [1,2,2,null,3,null,3]
-Output: false
+Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4
+Output: 2
+Explanation: The LCA of nodes 2 and 4 is 2, since a node 
+can be a descendant of itself according to the LCA 
+definition.
+Example 3:
+
+Input: root = [2,1], p = 2, q = 1
+Output: 2
 
 Constraints:
 
-The number of nodes in the tree is in the range [1, 1000].
--100 <= Node.val <= 100
+The number of nodes in the tree is in the range [2, 105].
+-109 <= Node.val <= 109
+All Node.val are unique.
+p != q
+p and q will exist in the BST.
 """
 
 import unittest
 
 # Definition for a binary tree node.
 # class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
 class Solution:
-    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        n = 0
-        stack = []
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         curr = root
-        
-        while curr or stack:
-            while curr:
-                stack.append(curr)
+        while curr:
+            # if both vals are greater than current val go down right subtree:
+            if p.val > curr.val and q.val > curr.val:
+                curr = curr.right
+            # if both vals are less than current value:
+            elif p.val < curr.val and q.val < curr.val:
                 curr = curr.left
-                
-            curr = stack.pop()
-            n += 1
-            if n == k:
-                return curr.val
-            curr = curr.right
+            else:
+                return curr
 
 class TestMethods(unittest.TestCase):
 
