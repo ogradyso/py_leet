@@ -36,19 +36,32 @@ import unittest
 #         self.val = val
 #         self.left = left
 #         self.right = right
+# class Solution:
+#     def isValidBST(self, root: Optional[TreeNode]) -> bool:
+#     	stack = []
+#     	prev_node = None
+#     	while stack or root:
+#     		while root:
+#     			stack.append(root)
+#     			root = root.left
+#     		root = stack.pop()
+#     		if prev_node and prev_node.val >= root.val: return False
+#     		prev_node = root
+#     		root = root.right
+#     	return True
+
+#optimized solution O(n)
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-    	stack = []
-    	prev_node = None
-    	while stack or root:
-    		while root:
-    			stack.append(root)
-    			root = root.left
-    		root = stack.pop()
-    		if prev_node and prev_node.val >= root.val: return False
-    		prev_node = root
-    		root = root.right
-    	return True
+        
+        def valid(node, left, right):
+            if not node: 
+                return True
+            if not(node.val < right and node.val > left):
+                return False
+            return (valid(node.left, left, node.val) and valid(node.right, node.val, right))
+
+        return valid(root, float("-inf"),float("inf"))
 
 
 
