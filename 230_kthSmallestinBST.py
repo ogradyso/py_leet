@@ -1,38 +1,27 @@
 # -*- coding: utf-8 -*-
 """
-Given a binary search tree (BST), find the lowest common 
-ancestor (LCA) of two given nodes in the BST.
-
-According to the definition of LCA on Wikipedia: “The 
-lowest common ancestor is defined between two nodes p 
-and q as the lowest node in T that has both p and q as 
-descendants (where we allow a node to be a descendant 
-             of itself).”
+Given the root of a binary search tree, and an integer k, 
+return the kth smallest value (1-indexed) of all the values 
+of the nodes in the tree.
 
 Example 1:
 
-Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8
-Output: 6
-Explanation: The LCA of nodes 2 and 8 is 6.
+Input: root = [3,1,4,null,2], k = 1
+Output: 1
 Example 2:
 
-Input: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4
-Output: 2
-Explanation: The LCA of nodes 2 and 4 is 2, since a node 
-can be a descendant of itself according to the LCA 
-definition.
-Example 3:
-
-Input: root = [2,1], p = 2, q = 1
-Output: 2
+Input: root = [5,3,6,2,4,null,null,1], k = 3
+Output: 3
 
 Constraints:
 
-The number of nodes in the tree is in the range [2, 105].
--109 <= Node.val <= 109
-All Node.val are unique.
-p != q
-p and q will exist in the BST.
+The number of nodes in the tree is n.
+1 <= k <= n <= 104
+0 <= Node.val <= 104
+
+Follow up: If the BST is modified often (i.e., we can do 
+insert and delete operations) and you need to find the kth 
+smallest frequently, how would you optimize?
 """
 
 import unittest
