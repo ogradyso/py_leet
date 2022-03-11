@@ -1,0 +1,94 @@
+# -*- coding: utf-8 -*-
+"""
+You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+ 
+
+Example 1:
+
+Input: prices = [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+Note that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.
+Example 2:
+
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transactions are done and the max profit = 0.
+ 
+
+Constraints:
+
+1 <= prices.length <= 105
+0 <= prices[i] <= 104
+"""
+
+import unittest
+from typing import List
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        min_day = (10**4)+ 1
+        max_profit = -1
+        for day in prices:
+            if day < min_day:
+                min_day = day
+            if day - min_day > max_profit:
+                max_profit = day - min_day
+        return max_profit
+
+            
+
+class TestMethods(unittest.TestCase):
+
+    def test_twoSum_ex1(self):
+        nums = [2,7,11,15]
+        target = 9
+        output = [0,1]
+        mySolution = Solution()
+        self.assertEqual(mySolution.twoSum(nums, target), output)
+        
+    def test_twoSum_ex2(self):
+        nums = [3,2,4]
+        target = 6
+        output = [1,2]
+        mySolution = Solution()
+        self.assertEqual(mySolution.twoSum(nums, target), output)
+        
+    def test_twoSum_ex3(self):
+        nums = [3,3]
+        target = 6
+        output = [0,1]
+        mySolution = Solution()
+        self.assertEqual(mySolution.twoSum(nums, target), output)
+
+    def test_twoSum_emptyArray(self):
+        nums = []
+        target = 6
+        output = []
+        mySolution = Solution()
+        self.assertEqual(mySolution.twoSum(nums, target), output)
+
+    def test_twoSum_unsortedArray(self):
+        nums = [9, 6, 109, 3, 1]
+        target = 10
+        output = [0,4]
+        mySolution = Solution()
+        self.assertEqual(mySolution.twoSum(nums, target), output)
+
+    def test_twoSum_tgtNotFound(self):
+        nums = [9, 6, 109, 3, 8]
+        target = 10
+        output = []
+        mySolution = Solution()
+        self.assertEqual(mySolution.twoSum(nums, target), output)
+        
+    
+
+if __name__ == '__main__':
+    unittest.main()
