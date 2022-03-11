@@ -44,59 +44,71 @@ import unittest
 from typing import List
 
 
-class Solution:
-    class Solution:
-    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        if not lists or len(lists) == 0:
-            return None
+# class Solution:
+#     def mergeKLists(self, lists: List[[ListNode]]):
+#         if not lists or len(lists) == 0:
+#             return None
         
-        while len(lists) > 1:
-            mergedLists = []
+#         while len(lists) > 1:
+#             mergedLists = []
             
-            for i in range(0, len(lists), 2):
-                l1 = lists[i]
-                l2 = lists[i+1] if (i+1) < len(lists) else None
-                mergedLists.append(self.mergeList(l1,l2))
-            lists = mergedLists
-        return lists[0]
+#             for i in range(0, len(lists), 2):
+#                 l1 = lists[i]
+#                 l2 = lists[i+1] if (i+1) < len(lists) else None
+#                 mergedLists.append(self.mergeList(l1,l2))
+#             lists = mergedLists
+#         return lists[0]
     
-    def mergeList(self, l1,l2):
-        temp = ListNode()
-        tail = temp
-        while l1 and l2:
-            if l1.val < l2.val:
-                tail.next = l1
-                l1 = l1.next
-            else:
-                tail.next = l2
-                l2 = l2.next
-            tail = tail.next
-        if l1:
-            tail.next = l1
-        if l2:
-            tail.next = l2
-        return temp.next
+#     def mergeList(self, l1,l2):
+#         temp = ListNode()
+#         tail = temp
+#         while l1 and l2:
+#             if l1.val < l2.val:
+#                 tail.next = l1
+#                 l1 = l1.next
+#             else:
+#                 tail.next = l2
+#                 l2 = l2.next
+#             tail = tail.next
+#         if l1:
+#             tail.next = l1
+#         if l2:
+#             tail.next = l2
+#         return temp.next
+
+import heapq
+# MinHeap solution:
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        if lists == [[]] or lists == [] or (len(lists) == 1 and lists[0] == None):
+            return None
+        minHeap = []
+        #load heap:
+        for curList in lists:
+            while curList:
+                minHeap.append(curList.val)
+                curList = curList.next
+        heapq.heapify(minHeap)
+                
+        #unload heap:
+        if not minHeap:
+            return None
+        result = ListNode(heapq.heappop(minHeap))
+        root = result
+        while minHeap:
+            result.next = ListNode(heapq.heappop(minHeap))
+            result = result.next
+        return root
 
 class TestMethods(unittest.TestCase):
 
-    def test_canAttendMeetings_ex1(self):
+    def test_mergeKLists_ex1(self):
         
-        inputs = [Interval(0,30),Interval(5,10),Interval(15,20)]
-        output = False
+        inputs = [[]]
+        output = []
         mySolution = Solution()
-        self.assertEqual(mySolution.canAttendMeetings(inputs), output)
+        self.assertEqual(mySolution.mergeKLists(inputs), output)
         
-    def test_canAttendMeetings_ex2(self):
-        inputs = [Interval(7,10),Interval(2,4)]
-        output = True
-        mySolution = Solution()
-        self.assertEqual(mySolution.canAttendMeetings(inputs), output)
-        
-    def test_canAttendMeetings_ex3(self):
-        inputs = [Interval(1,2),Interval(2,4)]
-        output = True
-        mySolution = Solution()
-        self.assertEqual(mySolution.canAttendMeetings(inputs), output)
-
+   
 if __name__ == '__main__':
     unittest.main()
