@@ -30,8 +30,29 @@ Constraints:
 import unittest
 from typing import List
 
+# class Solution:
+#     def max_profit(prices):
+#         lowest = 10**4
+#         max_profit = 0
+#         for n in prices:
+#             if n < lowest:
+#                 lowest = n
+#             max_profit = max(max_profit, n - lowest)
+#         return max_profit
 
 
+class Solution:
+    def max_profit(prices):
+        left, right = 0,1
+        max_profit = 0
+        while right < len(prices):
+            if prices[left] < prices[right]:
+                profit = prices[right] - prices[left]
+                max_profit = max(max_profit, profit)
+            else:
+                left = right
+            right += 1
+        return max_profit
             
 
 class TestMethods(unittest.TestCase):
