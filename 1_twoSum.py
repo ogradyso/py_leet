@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up 
+to target.
 
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
@@ -35,7 +36,16 @@ Follow-up: Can you come up with an algorithm that is less than O(n2) time comple
 import unittest
 from typing import List
 
-            
+class Solution:
+    def twoSum(self, nums, target):
+        diff_dict = {}
+        for i,n in enumerate(nums):
+            diff = target- n 
+            if diff in diff_dict:
+                return [diff_dict[diff],i]
+            else:
+                diff_dict[n] = i
+        return []
 
 class TestMethods(unittest.TestCase):
 
