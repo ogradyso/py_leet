@@ -30,8 +30,18 @@ The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit int
 import unittest
 from typing import List
 
-
-
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        max_prod = max(nums)
+        curr_max, curr_min = 1,1
+        for num in nums:
+            if num == 0:
+                curr_max, curr_min = 1,1
+            temp = num * curr_max
+            curr_max = max(num*curr_min, num*curr_max, num)
+            curr_min = max(num*curr_min, temp, num)
+            max_prod = max(max_prod, curr_max)
+        return max_prod
 
             
 
