@@ -27,7 +27,14 @@ Constraints:
 import unittest
 from typing import List
 
-
+class Solution:
+    def containsDuplicate(self, nums:List[int]) -> bool:
+        found = set()
+        for num in nums:
+            if num in found:
+                Return True
+            found.add(num)
+        return False
 
             
 
