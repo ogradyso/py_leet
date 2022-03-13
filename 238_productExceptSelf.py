@@ -31,6 +31,19 @@ Follow up: Can you solve the problem in O(1) extra space complexity? (The output
 import unittest
 from typing import List
 
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        products = [1] * len(nums)
+        running_prod = 1
+        for i in range(len(nums)):
+            products[i] *= running_prod
+            running_prod *= nums[i]
+        running_prod = 1
+        for i in reversed(range(len(nums))):
+            products[i] *= running_prod
+            running_prod *= nums[i]
+        return products
+
 
 class TestMethods(unittest.TestCase):
 
