@@ -41,23 +41,30 @@ nums is sorted and rotated between 1 and n times.
 import unittest
 from typing import List
 
+# class Solution:
+#     def findMin(self, nums: List[int]) -> int:
+#         left = 0
+#         right = len(nums)-1
+#         result = nums[0]
+#         while left <= right:
+#             if nums[left] < nums[right]:
+#                 result = min(result, num[left])
+#                 break
+#             mid = (left + right) // 2
+#             result = min(result, nums[mid])
+#             if nums[mid] >= nums[left]:
+#                 left = mid +1
+#             else:
+#                 right = mid -1
+#         return result
+            
 class Solution:
     def findMin(self, nums: List[int]) -> int:
-        left = 0
-        right = len(nums)-1
-        result = nums[0]
-        while left <= right:
-            if nums[left] < nums[right]:
-                result = min(result, num[left])
-                break
-            mid = (left + right) // 2
-            result = min(result, nums[mid])
-            if nums[mid] >= nums[left]:
-                left = mid +1
-            else:
-                right = mid -1
-        return result
-            
+        min_val = float("inf")
+        min_id = len(nums) -1
+        for min_id in reversed(range(len(nums))):
+            min_val = min(min_val, nums[min_id])
+        return min(min_val, nums[0])
 
 class TestMethods(unittest.TestCase):
 
